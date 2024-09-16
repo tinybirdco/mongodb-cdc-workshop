@@ -1,0 +1,54 @@
+NODE count_mongo_cdc_events
+SQL >
+
+    SELECT COUNT() FROM mongo_cdc_events
+
+
+
+NODE count_mongo_deletes
+SQL >
+
+    SELECT COUNT() FROM deletes_mv
+
+
+
+NODE count_mongo_reports
+SQL >
+
+    SELECT COUNT() FROM weather_reports_mv
+
+
+
+NODE count_nested_json
+SQL >
+
+    SELECT count() FROM nested_json
+
+
+
+NODE most_recent_mongo
+SQL >
+
+    SELECT 
+    timestamp AS timestamp, 
+    site_name AS site_name, 
+    NOW() - toDateTime(timestamp) AS seconds_ago
+    FROM mongo_cdc_events
+    ORDER BY timestamp DESC
+    LIMIT 10
+
+
+
+NODE most_recent_nested_json
+SQL >
+
+    SELECT 
+    timestamp AS timestamp, 
+    site_name AS site_name, 
+    JSONExtractFloat(payload, 'temp_f') as temp_f,
+    NOW() - toDateTime(timestamp) AS seconds_ago
+    FROM nested_json
+    ORDER BY timestamp DESC
+    LIMIT 10
+
+
