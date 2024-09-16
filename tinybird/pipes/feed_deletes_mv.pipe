@@ -1,0 +1,11 @@
+NODE get_deletes
+SQL >
+
+    SELECT documentKey__id, insertion_date
+    FROM mongo_cdc_events_quarantine
+    WHERE operationType = 'delete'
+
+TYPE materialized
+DATASOURCE deletes_mv
+
+

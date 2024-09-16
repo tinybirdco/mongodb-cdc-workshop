@@ -1,0 +1,25 @@
+NODE select_all_no_deletes
+SQL >
+
+    SELECT
+        timestamp,
+        site_name,
+        JSONExtractString(payload, 'description') AS description,
+        JSONExtractFloat(payload, 'temp_f') AS temp_f,
+        JSONExtractFloat(payload, 'precip') AS preceip,
+        JSONExtractInt(payload, 'humidity') AS humidity,
+        JSONExtractFloat(payload, 'clouds') AS clouds,
+        JSONExtractInt(payload, 'pressure') AS pressure,
+        JSONExtractFloat(payload, 'wind_speed') AS wind_speed,
+        JSONExtractInt(payload, 'wind_dir') AS wind_dir,
+        documentKey__id
+    FROM mongo_cdc_events
+    WHERE documentKey__id NOT IN (
+        SELECT documentKey__id 
+        FROM deletes_mv
+    )
+
+TYPE materialized
+DATASOURCE weather_reports_mv
+
+

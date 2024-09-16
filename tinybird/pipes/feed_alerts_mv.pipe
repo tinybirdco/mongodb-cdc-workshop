@@ -1,0 +1,14 @@
+NODE get_alerts_and_parse_payload
+SQL >
+
+    SELECT timestamp, site_name,  
+    JSONExtractString(payload, 'message') AS message,
+    parseDateTimeBestEffort(JSONExtractString(payload, 'expire_time')) AS expired_time,
+    JSONExtractString(payload, 'source') AS source
+    FROM nested_json
+    WHERE event_type = 'alert'
+
+TYPE materialized
+DATASOURCE alerts_mv
+
+

@@ -1,0 +1,19 @@
+NODE get_reports_and_parse_payload
+SQL >
+
+    SELECT timestamp, 
+    site_name,  
+    JSONExtractFloat(payload, 'description') AS description,
+    JSONExtractFloat(payload, 'temp_f') AS temp_f,
+    JSONExtractFloat(payload, 'precip') AS preceip,
+    JSONExtractInt(payload, 'humidity') AS humidity,
+    JSONExtractInt(payload, 'pressure') AS pressure,
+    JSONExtractFloat(payload, 'wind_speed') AS wind_speed,
+    JSONExtractInt(payload, 'wind_dir') AS wind_dir
+    FROM nested_json
+    WHERE event_type = 'report'
+
+TYPE materialized
+DATASOURCE reports_mv
+
+
