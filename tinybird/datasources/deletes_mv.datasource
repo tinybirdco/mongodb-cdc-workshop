@@ -1,0 +1,11 @@
+# Data Source created from Pipe 'feed_deletes_mv'
+DESCRIPTION >
+    Mongo CDC events with `operationType = delete` have a null `payload` attribute. These events end up being quarantined and we extract 'delete' events from there.
+
+SCHEMA >
+    `documentKey__id` Nullable(String),
+    `insertion_date` DateTime
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(insertion_date)"
+ENGINE_SORTING_KEY "insertion_date"

@@ -1,0 +1,16 @@
+# Data Source created from Pipe 'feed_reports_mv'
+
+SCHEMA >
+    `timestamp` DateTime,
+    `site_name` String,
+    `description` Float64,
+    `temp_f` Float64,
+    `preceip` Float64,
+    `humidity` Int64,
+    `pressure` Int64,
+    `wind_speed` Float64,
+    `wind_dir` Int64
+
+ENGINE "ReplacingMergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "timestamp, site_name, temp_f"

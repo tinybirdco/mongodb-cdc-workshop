@@ -1,0 +1,29 @@
+DESCRIPTION >
+    CDC Events coming from a MongoDB instance.
+
+SCHEMA >
+    `_id__data` String `json:$._id._data`,
+    `clusterTime` Int64 `json:$.clusterTime`,
+    `documentKey__id` String `json:$.documentKey._id`,
+    `fullDocument__id` String `json:$.fullDocument._id`,
+    `site_name` String `json:$.fullDocument.site_name`,
+    `timestamp` DateTime `json:$.fullDocument.timestamp`,
+    `payload` String `json:$.fullDocument`,
+    `ns_coll` String `json:$.ns.coll`,
+    `ns_db` String `json:$.ns.db`,
+    `operationType` String `json:$.operationType`,
+    `wallTime` Int64 `json:$.wallTime`
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(timestamp)"
+ENGINE_SORTING_KEY "timestamp, site_name"
+
+KAFKA_CONNECTION_NAME 'cdc_events'
+KAFKA_TOPIC 'mongo.weather-data.weather-reports'
+KAFKA_GROUP_ID 'mongo.weather-data.weather-reports_1726516607281'
+KAFKA_AUTO_OFFSET_RESET 'earliest'
+KAFKA_STORE_RAW_VALUE 'False'
+KAFKA_STORE_HEADERS 'False'
+KAFKA_STORE_BINARY_HEADERS 'True'
+KAFKA_TARGET_PARTITIONS 'auto'
+KAFKA_KEY_AVRO_DESERIALIZATION ''

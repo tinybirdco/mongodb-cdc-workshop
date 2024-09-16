@@ -1,0 +1,10 @@
+
+SCHEMA >
+    `event_type` String `json:$.event_type`,
+    `timestamp` DateTime `json:$.timestamp`,
+    `site_name` String `json:$.site_name`,
+    `payload` String `json:$.message`
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYear(timestamp)"
+ENGINE_SORTING_KEY "event_type, timestamp, site_name"
