@@ -23,7 +23,11 @@ Here is a look at what we are building:
 The `tinybird` folder contains:
 * Data Source definitions.
 * Pipe and Node definitions.
-* Example Tinybird Playgrounds. 
+* Example Tinybird Playgrounds.
+
+## Resources
+* [A practical guide to real-time CDC with MongoDB](https://www.tinybird.co/blog-posts/mongodb-cdc)
+* [Lambda CDC processing with Tinybird](https://www.tinybird.co/docs/guides/querying-data/lambda-example-cdc)
 
 ## Session JSON objects
 
@@ -36,8 +40,10 @@ When working with nested JSON, there are two JSON documents ingested:
 ![JSON](images/alert-object.png)
 
 
+This workshop starts with a MongoDB Atlas database with a `weather-reports` collection. 
 
 ![MongoDB Atlas](images/mongodb-atlas.png)
 
+The Confluent MongoDB Atlas Source Connector is used to publish CDC events onto a Kafka stream.
 
 ![Confluent Connector](images/confluent-connector.png)
